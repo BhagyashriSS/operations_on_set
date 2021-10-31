@@ -1,0 +1,166 @@
+#include <stdio.h>
+
+void accept ( int *p,int n);
+void display(int *p,int n );
+void Union( int *p,int n1,int * q,int n2);
+void intersection( int *p,int n1,int * q,int n2);
+void difference( int *p,int n1,int * q,int n2);
+void symm_diff(int *p,int n1,int * q,int n2 );
+int main() {
+  int n1,n2, c;
+  printf(" enter size number of elements in  Set A ");
+  scanf("%d",&n1);
+  printf(" enter size number of elements in  Set B");
+  scanf("%d",&n2);
+  
+  int a[n1], b[n2];
+  printf("\n enter values in set A");
+  accept( a,n1);
+  printf("\n enter values in set A");
+ accept( b,n2);
+ printf("\n set A : ");
+ display( a,n1);
+ printf("\n set B : ");
+ display( b,n2);
+ do{
+   printf("\n\n1.Union\n2.intersection\n3.difference\n4.symmetric difference of two sets \n5.Exit");
+   printf("\n enter choice");
+   scanf("%d",&c);
+   switch( c)
+   {
+     case 1: Union ( a,n1,b,n2);
+            break;
+     case 2: intersection(a,n1,b,n2);
+            break;
+     case 3:
+          printf(" \nchoose\t1.A-B\n     \t2.B-A\n");
+          int c;
+          scanf("%d",&c);
+          if( c==1){
+            printf("\nA-B : ");
+           difference(a,n1,b,n2);
+          }
+          else{
+            printf("\nB-A : ");
+           difference(b,n2,a,n1);
+          }
+            break;
+     case 4:symm_diff( a,n1,b,n2);
+           break;
+     case 5:printf("\n\n ****** thanks *******"); 
+        return 0;
+     default :
+          printf(" wrong choice, enter correct choice ");
+          continue;
+          
+   }
+ 
+ } while( 1);
+ 
+}
+void accept ( int *p,int n)
+{
+ 
+  printf(" enter set values \n");
+  for( int i=0;i<n;i++)
+  {
+    int x;
+    scanf("%d",&x);
+    p[i]=x;
+    
+  }
+}
+void display( int *p,int n)
+{
+
+  for( int i=0;i<n;i++)
+  {
+    printf("%d ",*(p));
+    p++;
+  }
+}
+void Union (  int *p,int n1,int * q,int n2)
+{
+  int x=n1+n2;
+   int U[x];
+   int k=n1;
+   for( int i=0;i<k;i++)
+   {
+     U[i]=*p;
+     p++;
+   }
+   int j,i;
+   for(  i=0;i<n2;i++)
+   {
+     for(  j=0;j<k;j++)
+     {
+       if(U[j]==q[i])
+          break;
+     }
+     if(j==k)
+     {
+       U[k]=q[i];
+       k++;
+     }
+   }
+   printf("\n Union : ");
+   for( int i=0;i<k;i++)
+   {
+     printf(" %d ",U[i]);
+   }
+}
+
+void intersection( int *p,int n1,int * q,int n2 )
+{
+   int inter[ n1]; int k=0; 
+   for( int i=0;i<n1;i++)
+   {
+     for ( int j=0;j<n2;j++)
+     {
+       if( p[i]==q[j])
+       {
+        inter[k]=p[i];
+         k++;
+       }
+     }
+   }
+   printf(" \n intersection : ");
+   for( int i=0;i<k;i++)
+   {
+    printf(" %d",inter[i]);
+   }
+}
+void difference( int *p,int n1,int * q,int n2 )
+{
+   int diff[ n1]; int k=0,j,i; 
+   for( i=0;i<n1;i++)
+   { 
+     
+     for (  j=0;j<n2;j++)
+     {
+       if( p[i]==q[j])
+       {
+          break;
+       }
+     }
+       if(j ==n2)
+       {
+         diff[k]=p[i];
+         k++;
+       }
+
+     }  
+      
+   
+   for( int i=0;i<k;i++)
+   {
+    printf(" %d",diff[i]);
+   }
+}
+void symm_diff( int *p,int n1,int * q,int n2)
+{
+ printf(" \nsymmetric difference : ");
+ difference(p,n1,q,n2);
+ difference(q,n2,p,n1);
+ 
+}
